@@ -4,7 +4,7 @@ name="slave-1 slave-2 client master"
 mkdir ~/tmp
 
 # download hadoop package if it doesn't exist
-cat ~/hadoop-2.10.1.tar.gz > /dev/null || \
+cat ~/tmp/hadoop-2.10.1.tar.gz > /dev/null || \
 wget https://archive.apache.org/dist/hadoop/common/hadoop-2.10.1/hadoop-2.10.1.tar.gz -P ~/tmp
 
 for n in $(echo $name)

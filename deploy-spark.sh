@@ -1,17 +1,19 @@
 name="slave-1 slave-2 client master"
 pkgs="https://downloads.lightbend.com/scala/2.12.2/scala-2.12.2.tgz https://archive.apache.org/dist/spark/spark-2.4.7/spark-2.4.7-bin-without-hadoop.tgz"
 
-# download all packages
+# download all packages to tmp dir
 sudo -u ubuntu mkdir ~/tmp
 for p in $(echo $pkgs)
 do
+    # download only if the package doesn't exist
+    cat /home/ubuntu/tmp/"$p" > /dev/null || \
     wget "$p" -P /home/ubuntu/tmp/
 done
 
 # download
 for n in $(echo $name)
 do
-    # stop all running java process clear spark
+    # stop all running java process; clear spark
     sudo -u ubuntu ssh ubuntu@$n '
     pids=( $(jps | awk "{print $1}") )
     for pid in "${pids[@]}"; do
