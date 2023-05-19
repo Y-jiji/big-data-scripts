@@ -1,18 +1,19 @@
 name="slave-1 slave-2 client master"
 pkgs="http://archive.apache.org/dist/flink/flink-1.12.1/flink-1.12.1-bin-scala_2.12.tgz https://downloads.lightbend.com/scala/2.12.2/scala-2.12.2.tgz"
+current_dir=$(pwd)
 
 sudo apt install axel
 
 # download all packages to tmp dir
 sudo -u ubuntu mkdir ~/tmp
+cd tmp
 for p in $(echo $pkgs)
 do
-    # download only if the package doesn't exist
-    cat /home/ubuntu/tmp/"$p" > /dev/null || \
-    axel "$p" -P /home/ubuntu/tmp/
+    axel "$p"
 done
 
 # download
+cd $current_dir
 for n in $(echo $name)
 do
     # stop all running java process; clear flink
